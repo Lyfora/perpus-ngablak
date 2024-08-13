@@ -1,0 +1,30 @@
+@startuml
+
+actor Admin
+boundary "Employee List Page" as EmployeeListPage 
+boundary "Employee Edit Page" as EmployeeEditPage
+control "Employee Controller" as EmployeeController
+
+entity "Employee" as Employee
+
+
+Admin -> EmployeeEditPage : Open Employee Edit Page
+activate EmployeeEditPage
+EmployeeEditPage -> EmployeeController : viewEdit()
+activate EmployeeController
+EmployeeController -> Employee : findById()
+activate Employee
+Employee -> EmployeeController : return data
+EmployeeController -> EmployeeEditPage : return data
+EmployeeEditPage -> EmployeeController : actionEdit()
+EmployeeController -> Employee : save()
+deactivate Employee
+alt Update Fail
+    EmployeeController -> EmployeeEditPage : redirect
+    deactivate EmployeeEditPage
+else Update Success
+    EmployeeController -> EmployeeListPage : redirect
+    activate EmployeeListPage
+end
+
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+
+actor Admin
+boundary "User List Page" as UserListPage 
+boundary "User Edit Page" as UserEditPage
+control "User Controller" as UserController
+
+entity "User" as User
+
+
+Admin -> UserEditPage : Open User Edit Page
+activate UserEditPage
+UserEditPage -> UserController : viewEdit()
+activate UserController
+UserController -> User : findById()
+activate User
+User -> UserController : return data
+UserController -> UserEditPage : return data
+UserEditPage -> UserController : actionEdit()
+UserController -> User : save()
+deactivate User
+alt Update Fail
+    UserController -> UserEditPage : redirect
+    deactivate UserEditPage
+else Update Success
+    UserController -> UserListPage : redirect
+    activate UserListPage
+end
+
+@enduml

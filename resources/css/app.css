@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.select-scrollable {
+    max-height: 200px;
+    overflow-y: auto;
+}

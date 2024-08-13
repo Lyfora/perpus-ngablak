@@ -1,0 +1,60 @@
+@startuml
+
+actor Admin
+boundary "Appointment Detail Page" as AppointmentDetailPage  
+control "Appointment Controller" as AppointmentController
+control "Appointment Documentation Controller" as AppointmentDocumentationController
+entity "Appointment" as Appointment
+entity "Appointment Documentation" as AppointmentDocumentation
+entity "Rating" as Rating
+
+
+Admin -> AppointmentDetailPage : Open Appointment Detail Page
+activate AppointmentDetailPage
+AppointmentDetailPage -> AppointmentController : viewDetail()
+activate AppointmentController
+AppointmentController -> Appointment : findById()
+activate Appointment
+AppointmentController -> Appointment : getFile()
+Appointment -> AppointmentController : return detail data
+deactivate Appointment
+AppointmentController -> AppointmentDocumentation : get()
+activate AppointmentDocumentation
+AppointmentController -> AppointmentDocumentation : getFile()
+AppointmentDocumentation -> AppointmentController : return detail data
+deactivate AppointmentDocumentation
+AppointmentController -> Rating : findById()
+activate Rating
+Rating -> AppointmentController : return detail data
+deactivate Rating
+AppointmentController -> AppointmentDetailPage : return detail data
+
+alt Admin is marking appointment as done
+    AppointmentDetailPage -> AppointmentController : actionMarkAsDone()
+    AppointmentController -> Appointment : save()
+    activate Appointment
+    deactivate Appointment
+    AppointmentController -> AppointmentDetailPage : redirect()
+    deactivate AppointmentController
+end
+alt Admin upload appointment Documentation
+    AppointmentDetailPage -> AppointmentDocumentationController : actionUploadDocumentation()
+    activate AppointmentDocumentationController
+    AppointmentDocumentationController -> AppointmentDocumentation : processUpload()
+    activate AppointmentDocumentation
+    AppointmentDocumentationController -> AppointmentDocumentation : save()
+    deactivate AppointmentDocumentation
+    AppointmentDocumentationController -> AppointmentDetailPage : redirect()
+    deactivate AppointmentDocumentationController
+end
+alt Delete appointment Documentation
+    AppointmentDetailPage -> AppointmentDocumentationController : actionUploadDocumentation()
+    activate AppointmentDocumentationController
+    AppointmentDocumentationController -> AppointmentDocumentation : deleteFile()
+    activate AppointmentDocumentation
+    AppointmentDocumentationController -> AppointmentDocumentation : delete()
+    deactivate AppointmentDocumentation
+    AppointmentDocumentationController -> AppointmentDetailPage : redirect()
+end
+
+@enduml

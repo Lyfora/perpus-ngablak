@@ -1,0 +1,21 @@
+@startuml
+
+actor Admin
+boundary "News Detail Page" as NewsDetailPage  
+control "News Controller" as NewsController
+entity "News" as News
+
+
+Admin -> NewsDetailPage : Open News Page
+activate NewsDetailPage
+NewsDetailPage -> NewsController : viewDetail()
+activate NewsController
+NewsController -> News : findById()
+activate News
+NewsController -> News : getFile()
+News -> NewsController : return data
+NewsController -> NewsDetailPage : return data
+deactivate News
+
+
+@enduml

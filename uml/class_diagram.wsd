@@ -1,0 +1,138 @@
+@startuml
+class User {
+   + id : int
+   + name: string
+   + email: string
+   + password: string
+   + created_at: datetime
+   + updated_at: datetime
+   + deleted_at: datetime
+   --
+   + save()
+   + where(field, value)
+   + findById(id)
+   + get()
+   + delete()
+}
+
+class PasswordReset {
+   + email: string
+   + token: string
+   + created_at: datetime
+   --
+   + save()
+   + where(field, value)
+}
+
+class Appointment {
+   + id : int
+   + employee_id: int
+   + pic_name : string
+   + pic_email : string
+   + pic_phone : string
+   + institution_name : string
+   + identity_card : string
+   + date : date
+   + status_code : string
+   + code : string
+   + created_at: datetime
+   + updated_at: datetime
+   --
+   + save()
+   + where(field, value)
+   + findById(id)
+   + get()
+   + processUpload(input)
+   + getFile()
+}
+
+class Employee {
+   + id : int
+   + name: string
+   + created_at: datetime
+   + updated_at: datetime
+   + deleted_at: datetime
+   --
+   + save()
+   + where(field, value)
+   + findById(id)
+   + get()
+   + delete()
+}
+
+class AppointmentDocumentation {
+   + id : int
+   + appointment_id: int
+   + image: string
+   + created_by: int
+   + updated_by: int
+   + uploader: string
+   --
+   + save()
+   + where(field, value)
+   + findById(id)
+   + get()
+   + processUpload(input)
+   + getFile()
+}
+
+class Review{
+    + id : int
+    + appointment_id: int
+    + rating_value: int
+    + notes: string
+    + created_at: datetime
+    + updated_at: datetime
+    --
+    + save()
+    + where(field, value)
+    + findById(id)
+    + get()
+    + processUpload(input)
+    + getFile()
+}
+
+class News{
+    + id : int
+    + title: string
+    + thumbnail: string
+    + slug : string
+    + content: string
+    + status_code: string
+    + created_at: datetime
+    + updated_at: datetime
+    + published_at: datetime
+    + archived_at: datetime
+    --
+    + save()
+    + where(field, value)
+    + findById(id)
+    + get()
+    + processUpload(input)
+    + getFile()
+    + delete()
+}
+
+class NewsAttachment{
+    + id : int
+    + news_id: int
+    + image: string
+    + created_at: datetime
+    + updated_at: datetime
+    --
+    + save()
+    + where(field, value)
+    + findById(id)
+    + get()
+    + processUpload(input)
+    + getFile()
+    + delete()
+}
+
+Appointment " 1 " *-- " 1 " Employee
+Appointment " 1 " o-- " 0..1 " Review
+Appointment " 1 " o-- " 0..* " AppointmentDocumentation
+News " 1 " o-- " 0..* " NewsAttachment
+User " 1 " o-- " 0..* " PasswordReset
+
+@enduml

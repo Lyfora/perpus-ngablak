@@ -1,0 +1,27 @@
+@startuml
+
+actor Admin
+boundary "SignIn Page" as SignInPage 
+boundary "Dashboard Page" as DashboardPage 
+control "Auth Controller" as AuthController
+entity "User" as User
+
+Admin -> SignInPage : Open SignIn Page
+activate SignInPage
+SignInPage -> AuthController : actionSignIn()    
+activate AuthController
+AuthController -> User : checkCredential()
+activate User
+User --> AuthController : return User
+deactivate User
+
+alt User is valid
+    AuthController -> DashboardPage : redirect()
+    activate DashboardPage
+    deactivate DashboardPage
+else User is invalid
+    AuthController -> SignInPage : redirect()
+    activate SignInPage
+end
+
+@enduml

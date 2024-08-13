@@ -1,0 +1,20 @@
+@startuml
+
+actor Admin
+boundary "Employee Detail Page" as EmployeeDetailPage  
+control "Employee Controller" as EmployeeController
+entity "Employee" as Employee
+
+
+Admin -> EmployeeDetailPage : Open Employee Page
+activate EmployeeDetailPage
+EmployeeDetailPage -> EmployeeController : viewDetail()
+activate EmployeeController
+EmployeeController -> Employee : findById()
+activate Employee
+Employee -> EmployeeController : return data
+EmployeeController -> EmployeeDetailPage : return data
+deactivate Employee
+
+
+@enduml

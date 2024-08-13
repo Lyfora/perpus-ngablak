@@ -1,0 +1,26 @@
+@startuml
+
+actor Admin
+boundary "User Page" as UserPage  
+control "User Controller" as UserController
+entity "User" as User
+
+
+Admin -> UserPage : Open User Page
+activate UserPage
+UserPage -> UserController : viewList()
+activate UserController
+UserController -> User : get()
+activate User
+User -> UserController : return data
+UserController -> UserPage : return data
+
+alt Delete User
+    UserPage -> UserController : actionDelete()
+    UserController -> User : delete()
+    deactivate User
+    UserController -> UserPage : redirect()
+end
+
+
+@enduml

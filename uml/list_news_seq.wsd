@@ -1,0 +1,50 @@
+@startuml
+
+actor Admin
+boundary "News Page" as NewsPage  
+control "News Controller" as NewsController
+entity "News" as News
+entity "News Attachment" as NewsAttachment
+
+
+Admin -> NewsPage : Open News Page
+activate NewsPage
+NewsPage -> NewsController : viewList()
+activate NewsController
+NewsController -> News : get()
+activate News
+NewsController -> News : getFile()
+News -> NewsController : return data
+NewsController -> NewsPage : return data
+deactivate News
+alt Delete News
+    NewsPage -> NewsController : actionDelete()
+    NewsController -> NewsAttachment : where()
+    activate NewsAttachment
+    NewsController -> NewsAttachment : deleteFile()
+    NewsController -> NewsAttachment : delete()
+    deactivate NewsAttachment
+    NewsController -> News : delete()
+    activate News
+    deactivate News
+    NewsController -> NewsPage : redirect()
+end
+
+alt Publish News
+    NewsPage -> NewsController : actionPublish()
+    NewsController -> News : save()
+    activate News
+    deactivate News
+    NewsController -> NewsPage : redirect()
+end
+
+alt Archive News
+    NewsPage -> NewsController : actionArchive()
+    NewsController -> News : save()
+    activate News
+    deactivate News
+    NewsController -> NewsPage : redirect()
+end
+
+
+@enduml

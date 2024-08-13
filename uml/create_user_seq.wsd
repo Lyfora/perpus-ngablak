@@ -1,0 +1,27 @@
+@startuml
+
+actor Admin
+boundary "User List Page" as UserListPage 
+boundary "User Create Page" as UserCreatePage
+control "User Controller" as UserController
+
+entity "User" as User
+
+
+Admin -> UserCreatePage : Open User Create Page
+activate UserCreatePage
+UserCreatePage -> UserController : viewCreate()
+activate UserController
+UserController -> UserCreatePage : return page
+UserCreatePage -> UserController : actionCreate()
+UserController -> User : create()
+deactivate User
+alt Create Fail
+    UserController -> UserCreatePage : redirect
+    deactivate UserCreatePage
+else Create Success
+    UserController -> UserListPage : redirect
+    activate UserListPage
+end
+
+@enduml

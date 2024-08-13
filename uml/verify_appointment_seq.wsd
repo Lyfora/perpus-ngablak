@@ -1,0 +1,26 @@
+@startuml
+
+actor Admin
+boundary "Appointment Page" as AppointmentPage  
+control "Appointment Controller" as AppointmentController
+entity "Appointment" as Appointment
+
+
+Admin -> AppointmentPage : Open Appointment Page
+activate AppointmentPage
+AppointmentPage -> AppointmentController : viewList()
+activate AppointmentController
+AppointmentController -> Appointment : get()
+activate Appointment
+Appointment -> AppointmentController : return data
+AppointmentController -> AppointmentPage : return data
+
+alt Appointment Verification
+    AppointmentPage -> AppointmentController : actionVerify()
+    AppointmentController -> Appointment : save()
+    AppointmentController -> Appointment : sendMail()
+    AppointmentController -> AppointmentPage : redirect()
+end
+
+
+@enduml

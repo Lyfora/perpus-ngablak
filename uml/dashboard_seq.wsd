@@ -1,0 +1,28 @@
+@startuml
+
+actor Admin
+boundary "Dashboard Page" as DashboardPage 
+boundary "Dashboard Page" as DashboardPage 
+control "Dashboard Controller" as DashboardController
+entity "Review" as Review
+entity "Appointment" as Appointment
+
+
+Admin -> DashboardPage : Open Dashboard Page
+activate DashboardPage
+DashboardPage -> DashboardController : viewDashboard()  
+activate DashboardController
+DashboardController -> Review : monthlyReview()
+activate Review
+Review -> DashboardController : return Review
+deactivate Review
+DashboardController -> Appointment : monthlyAppointment()
+activate Appointment
+Appointment -> DashboardController : return appointment
+DashboardController -> Appointment : recapStatus()
+Appointment -> DashboardController : return recap status
+deactivate Appointment
+DashboardController -> DashboardPage : return dashboard data
+deactivate DashboardController
+
+@enduml

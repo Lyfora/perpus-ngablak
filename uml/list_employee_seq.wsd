@@ -1,0 +1,26 @@
+@startuml
+
+actor Admin
+boundary "Employee Page" as EmployeePage  
+control "Employee Controller" as EmployeeController
+entity "Employee" as Employee
+
+
+Admin -> EmployeePage : Open Employee Page
+activate EmployeePage
+EmployeePage -> EmployeeController : viewList()
+activate EmployeeController
+EmployeeController -> Employee : get()
+activate Employee
+Employee -> EmployeeController : return data
+EmployeeController -> EmployeePage : return data
+
+alt Delete Employee
+    EmployeePage -> EmployeeController : actionDelete()
+    EmployeeController -> Employee : delete()
+    deactivate Employee
+    EmployeeController -> EmployeePage : redirect()
+end
+
+
+@enduml

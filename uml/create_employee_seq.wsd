@@ -1,0 +1,27 @@
+@startuml
+
+actor Admin
+boundary "Employee List Page" as EmployeeListPage 
+boundary "Employee Create Page" as EmployeeCreatePage
+control "Employee Controller" as EmployeeController
+
+entity "Employee" as Employee
+
+
+Admin -> EmployeeCreatePage : Open Employee Create Page
+activate EmployeeCreatePage
+EmployeeCreatePage -> EmployeeController : viewCreate()
+activate EmployeeController
+EmployeeController -> EmployeeCreatePage : return page
+EmployeeCreatePage -> EmployeeController : actionCreate()
+EmployeeController -> Employee : save()
+deactivate Employee
+alt Create Fail
+    EmployeeController -> EmployeeCreatePage : redirect
+    deactivate EmployeeCreatePage
+else Create Success
+    EmployeeController -> EmployeeListPage : redirect
+    activate EmployeeListPage
+end
+
+@enduml
