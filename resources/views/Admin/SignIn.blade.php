@@ -37,7 +37,7 @@
         </div>
     </div>
     </div>
-    @include('Components.Toast.Index')
+    @include('Components.Toast.index')
 </body>
 
 </html>
