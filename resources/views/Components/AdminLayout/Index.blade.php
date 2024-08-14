@@ -13,8 +13,8 @@
 
 <body class="bg-gray-100 font-[Poppins]">
 
-    @include('Components.Sidebar.index')
-    @include('Components.Toast.index')
+    @include('Components.Sidebar.Index')
+    @include('Components.Toast.Index')
 
 </body>
 
