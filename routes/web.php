@@ -110,7 +110,3 @@ Route::post('admin/forgot-password', [AuthController::class, 'actionForgotPasswo
 Route::post('admin/change-password', [AuthController::class, 'actionChangePassword'])->name('action-change-password');
 Route::post('signin', [AuthController::class, 'actionLogin'])->name('signin');
 Route::get('signout', [AuthController::class, 'actionLogout'])->name('signout');
-
-
-Route::post('/appointment-documentation/create', [AppointmentDocumentationController::class, 'actionCreate'])->name('appointment-documentation.create');
-Route::post('/appointment/create', [AppointmentController::class, 'actionCreate']);

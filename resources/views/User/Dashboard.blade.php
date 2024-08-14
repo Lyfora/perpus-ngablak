@@ -76,7 +76,7 @@
             <h2 class="text-3xl text-blue-600 font-medium text-center mb-5">Perpustakaan Desa Ngablak</h2>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 @foreach($buku as $buku_data)
-                <a href="/kategori/{{$kategori_data->name}}">
+                <a href="/detailbuku/{{$buku_data->slug}}">
                     <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white p-4 text-center border-2 border-transparent hover:border-blue-500 transition duration-300">
                         <img class="w-full h-[180px] object-cover" src="{{$buku_data->thumbnail}}" alt="Image">
                         <h3 class="text-xl mt-4">{{$buku_data->title}}</h3>
